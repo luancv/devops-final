@@ -52,8 +52,11 @@ jobs:
           command: |
             echo "Docker ID and Image: $DOCKER_IMAGE_NAME"
             docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+            echo "logined"
             docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+            echo "====tag ==="
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+            echo "====push ==="
 
   deploy-infrastructure:
     docker:
