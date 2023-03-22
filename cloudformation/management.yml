@@ -1,0 +1,53 @@
+Description: >
+  Creates two individual hosts to manage the EKS-Cluster
+
+Parameters:
+  EnvironmentName:
+    Description: An Environment name that will be prefixed to resources
+    Type: String
+  SSHKeyName:
+    Description: SSH key for management access
+    Type: String
+  amiImageId:
+    Description: Defines the Image-ID of the OS to deploy
+    Type: String
+
+Resources:
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub ${EnvironmentName}-SG
+      GroupDescription: Allow port 22 for management
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+  managementHost1:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: InstanceSecurityGroup
+      KeyName: !Ref SSHKeyName
+      ImageId: !Ref amiImageId
+      Tags:
+        - Key: Name
+          Value: !Sub ${EnvironmentName}-management1
+        - Key: Project
+          Value: !Ref EnvironmentName
+
+  # managementHost2:
+  #   Type: AWS::EC2::Instance
+  #   Properties:
+  #     InstanceType: t2.micro
+  #     SecurityGroups:
+  #       - Ref: InstanceSecurityGroup
+  #     KeyName: !Ref SSHKeyName
+  #     ImageId: !Ref amiImageId
+  #     Tags:
+  #       - Key: Name
+  #         Value: !Sub ${EnvironmentName}-management2
+  #       - Key: Project
+  #         Value: !Ref EnvironmentName

@@ -1,0 +1,7 @@
+[
+  "EnvironmentName=final",
+  "MinSize=1",
+  "MaxSize=2",
+  "DesiredSize=2",
+  "KeyPairName=final-key"
+]
