@@ -54,6 +54,7 @@ jobs:
             docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASSWORD"
             docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -218,11 +219,11 @@ workflows:
             - test-build
           filters:
             branches:
-              only: [ master ]
+              only: [ main ]
       - deploy-infrastructure:
           filters:
             branches:
-              only: [ master ]
+              only: [ main ]
       - configure-infrastructure:
           requires:
             - deploy-infrastructure
