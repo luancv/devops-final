@@ -56,7 +56,7 @@ jobs:
             docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
             echo "====tag === $CIRCLE_WORKFLOW_ID"
             docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
-            docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
+            docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME
             echo "====push ==="
 
   deploy-infrastructure:
