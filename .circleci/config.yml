@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Build docker container
           command: |
-            docker build --tag $DOCKER_IMAGE_NAME
+            docker build --tag luancv/$DOCKER_IMAGE_NAME .
             docker image ls
       - run:
           name: Upload Docker to Dockerhub
