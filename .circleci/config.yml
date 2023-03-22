@@ -37,21 +37,16 @@ jobs:
   upload-docker:
     docker:
       - image: circleci/golang:1.15
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       - setup_remote_docker:
           version: 19.03.13
-
       - run:
           name: Build docker container
           command: |
             docker build --tag=$DOCKER_IMAGE_NAME .
             docker image ls
-
       - run:
           name: Upload Docker to Dockerhub
           command: |
@@ -59,7 +54,6 @@ jobs:
             docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASSWORD"
             docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:$CIRCLE_WORKFLOW_ID
-
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
