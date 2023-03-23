@@ -1,14 +1,15 @@
 Description: >
-  Creates two individual hosts to manage the EKS-Cluster
+  EKS-Cluster
 
 Parameters:
   EnvironmentName:
     Description: An Environment name that will be prefixed to resources
     Type: String
   SSHKeyName:
-    Description: SSH key for management access
+    default: key-final
+    Description: SSH key 
     Type: String
-  amiImageId:
+  ImageId:
     Description: Defines the Image-ID of the OS to deploy
     Type: String
 
@@ -31,10 +32,10 @@ Resources:
       SecurityGroups:
         - Ref: InstanceSecurityGroup
       KeyName: !Ref SSHKeyName
-      ImageId: !Ref amiImageId
+      ImageId: !Ref ImageId
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-management1
+          Value: !Sub ${EnvironmentName}-management
         - Key: Project
           Value: !Ref EnvironmentName
 

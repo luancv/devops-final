@@ -17,10 +17,6 @@ Parameters:
     Description: How many instances should be created.
     Type: Number
 
-  KeyPairName:
-    Description: The EC2 Key Pair to allow SSH access to the instances
-    Type: AWS::EC2::KeyPair::KeyName
-
 Mappings:
   ServicePrincipals:
     aws-cn:
