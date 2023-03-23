@@ -28,8 +28,7 @@ Resources:
   EKSClusterRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub ${EnvironmentName}-cluster-role
-      AssumeRolePolicyDocument:
+      RoleName: !Sub ${EnvironmentName}-c"
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
@@ -55,6 +54,7 @@ Resources:
         - !Ref SecurityGroup
         SubnetIds:
         - subnet-c73005c9
+        - subnet-042a2949
 Outputs:
   EksId:
     Description: EKS id
