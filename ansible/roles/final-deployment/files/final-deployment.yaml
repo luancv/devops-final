@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: capstone-project-deployment
+  name: final-deployment
   labels:
-    app: capstone-project-app
+    app: final-deployment
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: capstone-project-app
+      app: final-deployment
   template:
     metadata:
       labels:
-        app: capstone-project-app
+        app: final-deployment
     spec:
       containers:
-        - name: capstone-project-app
-          image: felixlutze/capstone-project
+        - name: final-deployment
+          image: luancv/final
           ports:
             - containerPort: 80
