@@ -29,7 +29,6 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       RoleName: !Sub ${EnvironmentName}-c"
-        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -43,7 +42,7 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSServicePolicy
         - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
 
-  CapstoneProjectCluster:
+  Cluster:
     Type: AWS::EKS::Cluster
     Properties:
       Version: "1.25"
@@ -58,7 +57,7 @@ Resources:
 Outputs:
   EksId:
     Description: EKS id
-    Value: !Ref CapstoneProjectCluster
+    Value: !Ref Cluster
     Export:
       Name: !Sub ${EnvironmentName}-EKSCluster
 
