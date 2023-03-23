@@ -50,11 +50,11 @@ Resources:
       Version: "1.19"
       Name: !Sub ${EnvironmentName}-cluster
       RoleArn: !GetAtt EKSClusterRole.Arn
-      ResourcesVpcConfig: !Ref SecurityGroup
+      ResourcesVpcConfig:
+        SecurityGroupIds: 
+        - !Ref SecurityGroup
         SubnetIds:
-          Fn::Split:
-            - ","
-            - subnet-c73005c9
+        - subnet-c73005c9
 Outputs:
   EksId:
     Description: EKS id
