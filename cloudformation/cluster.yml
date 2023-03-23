@@ -6,6 +6,17 @@ Parameters:
     Type: String
 
 Resources:
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Cluster communication with worker nodes
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
   ClusterInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties:
@@ -39,9 +50,7 @@ Resources:
       Version: "1.19"
       Name: !Sub ${EnvironmentName}-cluster
       RoleArn: !GetAtt EKSClusterRole.Arn
-      ResourcesVpcConfig:
-        SecurityGroupIds:
-          - Fn::ImportValue: !Sub ${EnvironmentName}-SCG
+      ResourcesVpcConfig: !Ref SecurityGroup
         SubnetIds:
           Fn::Split:
             - ","
