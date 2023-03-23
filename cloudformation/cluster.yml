@@ -11,7 +11,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Cluster communication with worker nodes
-      VpcId: !Ref VPC
+      VpcId: vpc-f92ca084
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
