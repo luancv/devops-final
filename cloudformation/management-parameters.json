@@ -1,5 +1,5 @@
 [
   "EnvironmentName=final",
   "SSHKeyName=key-final",
-  "amiImageId=ami-0263e4deb427da90e"
+  "ImageId=ami-0263e4deb427da90e"
 ]
