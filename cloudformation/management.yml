@@ -6,11 +6,10 @@ Parameters:
     Description: An Environment name that will be prefixed to resources
     Type: String
   SSHKeyName:
-    default: key-final
     Description: SSH key 
     Type: String
   ImageId:
-    Description: Defines the Image-ID of the OS to deploy
+    Description: ImageId
     Type: String
 
 Resources:
@@ -18,7 +17,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub ${EnvironmentName}-SG
-      GroupDescription: Allow port 22 for management
+      GroupDescription: Allow port 22
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -38,17 +37,3 @@ Resources:
           Value: !Sub ${EnvironmentName}-management
         - Key: Project
           Value: !Ref EnvironmentName
-
-  # managementHost2:
-  #   Type: AWS::EC2::Instance
-  #   Properties:
-  #     InstanceType: t2.micro
-  #     SecurityGroups:
-  #       - Ref: InstanceSecurityGroup
-  #     KeyName: !Ref SSHKeyName
-  #     ImageId: !Ref amiImageId
-  #     Tags:
-  #       - Key: Name
-  #         Value: !Sub ${EnvironmentName}-management2
-  #       - Key: Project
-  #         Value: !Ref EnvironmentName
