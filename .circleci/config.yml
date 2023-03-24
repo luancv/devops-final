@@ -168,8 +168,9 @@ jobs:
             ls
             mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
             echo 'export PATH=$PATH:$HOME/bin' >> .bashrc
-            echo $PATH
-            sudo nano ~/inventory.txt
+            cd $HOME/bin
+            ls 
+            pwd
             cat ~/inventory.txt
             cd ansible
             ansible-playbook -i ~/inventory.txt save-elb-dns.yml
