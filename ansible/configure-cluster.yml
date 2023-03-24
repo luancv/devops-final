@@ -6,6 +6,8 @@
   become: yes
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
+    DOCKERHUB_USERNAME: "{{ lookup('env','DOCKERHUB_USERNAME') }}"
+    DOCKERHUB_PASSWORD: "{{ lookup('env','DOCKERHUB_PASSWORD') }}"
   roles:
     - final-deployment
     - final-service
