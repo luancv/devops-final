@@ -3,7 +3,13 @@
   hosts: management
   user: ubuntu
   gather_facts: false
+  become_method: sudo
+  become_user: root
   become: yes
+  vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    - ansible_host_key_checking: false
+    - ansible_stdout_callback: yaml
   pre_tasks:
     - name: "Install 'unzip'"
       apt:
