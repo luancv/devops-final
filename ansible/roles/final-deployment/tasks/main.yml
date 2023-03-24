@@ -2,6 +2,18 @@
   copy:
     src: "{{ ENVIRONMENT_NAME }}-deployment.yaml"
     dest: $HOME
+- name: download
+  shell: "curl -o aws-iam-authenticator curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator"
+  args:
+    chdir: $HOME
+- name: Permission
+  shell: "chmod +x ./aws-iam-authenticator"
+  args:
+    chdir: $HOME
+- name: mv
+  shell: "sudo mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator"
+  args:
+    chdir: $HOME         
 - name: Apply deployment configuration
   shell: "aws eks --region us-east-1 update-kubeconfig --name final-cluster"
   args:
@@ -10,3 +22,7 @@
   shell: "./bin/kubectl apply -f {{ ENVIRONMENT_NAME }}-deployment.yaml"
   args:
     chdir: $HOME
+
+
+
+
