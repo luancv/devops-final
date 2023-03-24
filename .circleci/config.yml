@@ -168,7 +168,6 @@ jobs:
             ls
             mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
             echo 'export PATH=$PATH:$HOME/bin' >> .bashrc
-            vi ~/inventory.txt
             echo "tesst1"
             kubectl version
             echo "tesst2"
