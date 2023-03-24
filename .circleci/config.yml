@@ -168,7 +168,10 @@ jobs:
             ls
             mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
             echo 'export PATH=$PATH:$HOME/bin' >> .bashrc
+            sudo nano ~/inventory.txt
+            echo "tesst1"
             kubectl version
+            echo "tesst2"
             sudo nano ~/inventory.txt
             cat ~/inventory.txt
             cd ansible
