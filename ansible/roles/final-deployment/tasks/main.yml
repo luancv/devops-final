@@ -10,6 +10,3 @@
   shell: "./bin/kubectl apply -f {{ ENVIRONMENT_NAME }}-deployment.yaml"
   args:
     chdir: $HOME
-
-
-aws eks --region <region code> update-kubeconfig --name <cluster name>
