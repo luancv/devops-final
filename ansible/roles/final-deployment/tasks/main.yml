@@ -15,7 +15,7 @@
   args:
     chdir: $HOME
 - name: aws_access_key_id
-  shell: aws configure set aws_access_key_id {{AWS_ACCESS_KEY_ID}
+  shell: aws configure set aws_access_key_id {{AWS_ACCESS_KEY_ID}}
   args:
     chdir: $HOME
 - name: AWS_SECRET_ACCESS_KEY
