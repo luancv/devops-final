@@ -2,8 +2,14 @@
   copy:
     src: "{{ ENVIRONMENT_NAME }}-deployment.yaml"
     dest: $HOME
-
+- name: Apply deployment configuration
+  shell: "aws eks --region us-east-1 update-kubeconfig --name final-cluster"
+  args:
+    chdir: $HOME
 - name: Apply deployment configuration
   shell: "./bin/kubectl apply -f {{ ENVIRONMENT_NAME }}-deployment.yaml"
   args:
     chdir: $HOME
+
+
+aws eks --region <region code> update-kubeconfig --name <cluster name>
