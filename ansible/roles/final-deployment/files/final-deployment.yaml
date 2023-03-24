@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: final-deployment
+  name: final
   labels:
-    app: final-deployment
+    app: final
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: final-deployment
+      app: final
   template:
     metadata:
       labels:
-        app: final-deployment
+        app: final
     spec:
       containers:
-        - name: final-deployment
+        - name: final
           image: luancv/final
           ports:
             - containerPort: 80
