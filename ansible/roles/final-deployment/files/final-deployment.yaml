@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: final
-          image: luancv/final
+          image: final
           ports:
             - containerPort: 80
