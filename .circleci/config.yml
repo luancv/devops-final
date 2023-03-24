@@ -172,7 +172,7 @@ jobs:
             ls 
             pwd
             cat ~/inventory.txt
-            cd ~/ansible
+            cd ~/project/ansible
             ansible-playbook -i ~/inventory.txt save-elb-dns.yml
             cat ~/elb_dns.txt
       - persist_to_workspace:
