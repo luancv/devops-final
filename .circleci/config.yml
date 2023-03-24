@@ -107,7 +107,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apk add --update ansible && apk add curl curl-dev bash
       - run:
           name: Configure server
           command: |
@@ -134,7 +134,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apk add --update ansible && apk add curl curl-dev bash
       - run:
           name: Configure server
           command: |
