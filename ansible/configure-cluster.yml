@@ -6,8 +6,9 @@
   become: yes
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
-    DOCKERHUB_USERNAME: "{{ lookup('env','DOCKERHUB_USERNAME') }}"
-    DOCKERHUB_PASSWORD: "{{ lookup('env','DOCKERHUB_PASSWORD') }}"
+    AWS_ACCESS_KEY_ID: "{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+    AWS_SECRET_ACCESS_KEY: "{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+    AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"
   roles:
     - final-deployment
     - final-service
