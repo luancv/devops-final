@@ -2,13 +2,8 @@
   copy:
     src: "{{ ENVIRONMENT_NAME }}-deployment.yaml"
     dest: $HOME
-- name: Copy deployment configuration
-  shell: docker login -u {{DOCKERHUB_USERNAME}} -p {{DOCKERHUB_PASSWORD}}
-  args:
-    chdir: $HOME
+
 - name: Apply deployment configuration
   shell: "./bin/kubectl apply -f {{ ENVIRONMENT_NAME }}-deployment.yaml"
   args:
     chdir: $HOME
-
-
