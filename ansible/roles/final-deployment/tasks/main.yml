@@ -26,10 +26,6 @@
   shell: aws configure set region {{AWS_DEFAULT_REGION}}
   args:
     chdir: $HOME         
-- name: update-kubeconfig
-  shell: aws eks --region us-east-1 update-kubeconfig --name final-cluster
-  args:
-    chdir: $HOME
 - name: Apply deployment configuration
   shell: "./bin/kubectl apply -f {{ ENVIRONMENT_NAME }}-deployment.yaml"
   args:
