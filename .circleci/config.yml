@@ -136,7 +136,6 @@ jobs:
                 cat ~/inventory.txt
                 cd ansible
                 ansible-playbook -i ~/inventory.txt configure-cluster.yml
-              fi
       - run:
           name: Wait for LoadBalancer's domain to become reachable
           command: |
