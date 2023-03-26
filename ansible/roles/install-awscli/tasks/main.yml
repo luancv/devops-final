@@ -4,12 +4,12 @@
   args:
     chdir: $HOME
 
-- name: "Unzip the AWS CLI Archive"
-  shell: unzip awscliv2.zip
-  args:
-    chdir: $HOME
+# - name: "Unzip the AWS CLI Archive"
+#   shell: unzip awscliv2.zip
+#   args:
+#     chdir: $HOME
 
-- name: "Install the AWS CLI"
-  shell: ./aws/install
-  args:
-    chdir: $HOME
+# - name: "Install the AWS CLI"
+#   shell: ./aws/install
+#   args:
+#     chdir: $HOME
