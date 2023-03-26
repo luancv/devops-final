@@ -25,7 +25,16 @@
 - name: region
   shell: aws configure set region {{AWS_DEFAULT_REGION}}
   args:
-    chdir: $HOME         
+    chdir: $HOME
+- name: Run aws configure
+  expect:
+    command: aws configure
+    responses:
+      AWS Access Key ID: {{AWS_ACCESS_KEY_ID}}
+      AWS Secret Access Key: {{AWS_SECRET_ACCESS_KEY}}
+      Default region name: {{AWS_DEFAULT_REGION}}
+      Default output format: ""
+  no_log: true         
 - name: update-kubeconfig
   shell: aws eks --region us-east-1 update-kubeconfig --name final-cluster
   args:
