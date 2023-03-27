@@ -131,6 +131,7 @@ jobs:
             kubectl apply -f deployment/final-deployment.yaml
             kubectl apply -f services/final-service.yaml
             kubectl set image deployments/final final=luancv/final:latest
+            kubectl port-forward final-784bcf4dc-r5ff5 8080:80
 workflows:
   default:
     jobs:
