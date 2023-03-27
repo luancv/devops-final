@@ -152,6 +152,7 @@ jobs:
       - run:
           name: Display the LoadBalancer's DNS name
           command: |
+            docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
             cat ~/inventory.txt
             cd ~/project/ansible
             ansible-playbook -i ~/inventory.txt save-elb-dns.yml
