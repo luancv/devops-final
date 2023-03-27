@@ -85,7 +85,7 @@ jobs:
             cat ~/checkIfDeployed.txt
       - run:
           name: Extract the IPs of the management instances for Ansible
-          commandprovider: |
+          command: |
             echo [management] > ~/inventory.txt
             aws ec2 describe-instances \
               --region "${AWS_DEFAULT_REGION}" \
