@@ -11,19 +11,19 @@
     AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"
     
 - name: "Download kubectl"
-  hosts: management[0]
+  hosts: management
   user: ubuntu
   gather_facts: false
   become: yes
-  task:
+  tasks:
     shell: curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
 
 - name: "Apply execute permissions to the binary"
-  hosts: management[0]
+  hosts: management
   user: ubuntu
   gather_facts: false
   become: yes
-  task:
+  tasks:
     shell: chmod +x ./kubectl
 
 - name: "Copy the binary to a folder to the $PATH"
@@ -31,7 +31,7 @@
   user: ubuntu
   gather_facts: false
   become: yes
-  task:
+  tasks:
     shell: mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
   
 
@@ -40,7 +40,7 @@
   user: ubuntu
   gather_facts: false
   become: yes
-  task:
+  tasks:
     shell: echo 'export PATH=$PATH:$HOME/bin' >> .bashrc
 - name: "Authenticate AWS CLI with AWS"
   hosts: management
