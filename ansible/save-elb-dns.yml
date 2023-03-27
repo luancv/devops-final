@@ -18,6 +18,7 @@
   roles:
     - install-awscli
     - install-kubectl
+    - install-docker
 - name: "LOGIN DOCKER"
   hosts: management
   user: ubuntu
