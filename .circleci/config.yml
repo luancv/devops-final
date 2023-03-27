@@ -131,19 +131,8 @@ jobs:
             kubectl apply -f deployment/final-deployment.yaml
             kubectl apply -f services/final-service.yaml
             dockerpath=luancv/final
-
-            # Step 2
-            # Run the Docker Hub container with kubernetes
             kubectl run final --image=$dockerpath --port=8080
-
-            # Step 3:
-            # List kubernetes pods
-            kubectl get pods
-            # Step 4:
-            # Forward the container port to a host
-            sleep 120
-            kubectl port-forward final 8080:80
-            # kubectl set image deployments/final final=luancv/final
+            kubectl port-forward final
   
 workflows:
   default:
