@@ -127,8 +127,6 @@ jobs:
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             cat $HOME/.aws/credentials
             kubectl apply -f deployment/final-deployment.yaml
-            kubectl apply -f services/final-service.yaml
-            kubectl set image deployments/final final=luancv/final:latest
   
 workflows:
   default:
