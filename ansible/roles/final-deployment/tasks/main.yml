@@ -39,7 +39,7 @@
 - name: Apply deployment configuration
   shell: "./kubectl apply -f {{ ENVIRONMENT_NAME }}-deployment.yaml"
   args:
-    chdir: $HOME
+    chdir: /home/ubuntu
 
 
 
