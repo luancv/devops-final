@@ -38,6 +38,7 @@
   roles:
     - install-awscli
     - install-kubectl
+    - install-docker
 - name: "Fetch kubectl config"
   hosts: management
   user: ubuntu

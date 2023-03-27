@@ -2,7 +2,18 @@
   copy:
     src: "{{ ENVIRONMENT_NAME }}-service.yaml"
     dest: $HOME
-
+- name: aws_access_key_id
+  shell: aws configure set aws_access_key_id {{AWS_ACCESS_KEY_ID}}
+  args:
+    chdir: $HOME
+- name: AWS_SECRET_ACCESS_KEY
+  shell: aws configure set aws_secret_access_key {{AWS_SECRET_ACCESS_KEY}}
+  args:
+    chdir: $HOME         
+- name: region
+  shell: aws configure set region {{AWS_DEFAULT_REGION}}
+  args:
+    chdir: $HOME
 - name: Create service configuration
   command: "./bin/kubectl apply -f {{ ENVIRONMENT_NAME }}-service.yaml"
   args:
