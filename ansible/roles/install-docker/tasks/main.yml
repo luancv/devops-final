@@ -12,7 +12,7 @@
   args:
     chdir: $HOME
 - name: "Add the Docker repository to APT"
-  shell: "sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+  shell: "sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable""
   args:
     chdir: $HOME
 - name: "update the package database with the Docker packages "
