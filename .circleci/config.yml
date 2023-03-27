@@ -126,7 +126,7 @@ jobs:
             kubectl version --short --client
             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-            cat ~/.aws/config
+            cat $HOME/.aws/credentials
             kubectl apply -f deployment/final-deployment.yml
             kubectl apply -f services/final-service.yml
             kubectl set image deployments/final final=luancv/final
