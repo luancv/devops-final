@@ -33,12 +33,12 @@ jobs:
             . venv/bin/activate
             make lint
       - run:
-        name: run lint
-        command: |
-          ls -la
-          cd /app
-          ls 
-          pws
+          name: run lint
+          command: |
+            ls -la
+            cd /app
+            ls 
+            pws
       - save_cache:
           paths:
             - ./venv
