@@ -98,40 +98,38 @@ jobs:
           paths:
             - inventory.txt
             - checkIfDeployed.txt
-  build-docker-image:
-    machine: true
-    steps:
-      - checkout
-      - aws-ecr/build-and-push-image:
-          aws-cli-version: latest
- 
-          repo: final
-          tag: 'latest,${CIRCLE_WORKFLOW_ID:0:7}'
-  # deploy-kube:
-  #   docker:
-  #     - image: amazon/aws-cli
+  # build-docker-image:
+  #   machine: true
   #   steps:
   #     - checkout
-  #     - run:
-  #         name: Update kube configuration
-  #         command: |
-  #           aws eks update-kubeconfig --region us-east-1 --name FinalCluster
-  #     - run:
-  #         name: Deploy pods
-  #         command: |
-  #           curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.15/2022-10-31/bin/linux/amd64/kubectl
-  #           chmod +x ./kubectl
-  #           mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-  #           kubectl version --short --client
-  #           aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-  #           aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-  #           aws configure set region $AWS_DEFAULT_REGION
-  #           cat $HOME/.aws/credentials
-  #           aws sts get-caller-identity
-  #           kubectl apply -f deployment/final-deployment.yaml
-  #           kubectl apply -f services/final-service.yaml
-  #           kubectl set image deployments/final final=luancv/final:latest
-  #           kubectl port-forward final-784bcf4dc-r5ff5 8080:80
+  #     - aws-ecr/build-and-push-image:
+  #         aws-cli-version: latest
+ 
+  #         repo: final-ecr
+  #         tag: 'latest,${CIRCLE_WORKFLOW_ID:0:7}'
+  deploy-kube:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Update kube configuration
+          command: |
+            aws eks update-kubeconfig --region us-east-1 --name FinalCluster
+      - run:
+          name: Deploy pods
+          command: |
+            curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.15/2022-10-31/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+            kubectl version --short --client
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws configure set region $AWS_DEFAULT_REGION
+            cat $HOME/.aws/credentials
+            aws sts get-caller-identity
+            kubectl apply -f deployment/final-deployment.yaml
+            kubectl apply -f services/final-service.yaml
 workflows:
   default:
     jobs:
@@ -146,9 +144,9 @@ workflows:
           filters:
             branches:
               only: [ main ]
-      - build-docker-image:
-          requires:
-            - deploy-infrastructure
-      # - deploy-kube:
-      #     requires: 
-      #     - upload-docker
+      # - build-docker-image:
+      #     requires:
+      #       - deploy-infrastructure
+      - deploy-kube:
+          requires: 
+          - upload-docker
