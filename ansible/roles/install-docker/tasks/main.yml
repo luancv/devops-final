@@ -1,5 +1,5 @@
 ---
-- name: "Download kubectl"
-  shell: sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+- name: "update"
+  shell: "sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
   args:
     chdir: $HOME
