@@ -10,16 +10,17 @@
   shell: "chmod +x ./aws-iam-authenticator"
 - name: mv
   shell: "sudo mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator"
-  
+  args:
+    chdir: $HOME
 - name: aws_access_key_id
   shell: aws configure set aws_access_key_id {{AWS_ACCESS_KEY_ID}}
-  
+
 - name: AWS_SECRET_ACCESS_KEY
   shell: aws configure set aws_secret_access_key {{AWS_SECRET_ACCESS_KEY}}
-           
+         
 - name: region
   shell: aws configure set region {{AWS_DEFAULT_REGION}}
-  
+
 - name: Run aws configure
   expect:
     command: aws configure
