@@ -143,8 +143,8 @@ workflows:
           filters:
             branches:
               only: [ main ]
-      - build-docker-image:
-          requires:
-            - deploy-infrastructure
-      # - deploy-kube:
+      # - build-docker-image:
+      #     requires:
+      #       - deploy-infrastructure
+      - deploy-kube
       #     requires: [build-docker-image]
