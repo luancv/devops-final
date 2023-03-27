@@ -93,95 +93,35 @@ jobs:
           paths:
             - inventory.txt
             - checkIfDeployed.txt
-
-  configure-infrastructure:
-    docker:
-      - image: python:3.7-alpine3.11
+  build-docker-image:
+    machine: true
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "c8:0d:92:dc:4b:9c:f1:00:48:07:40:72:dd:5d:fc:c9"
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible && apk add curl curl-dev bash
-      - run:
-          name: Configure server
-          command: |
-                cat ~/inventory.txt
-                cd ansible
-                ansible-playbook -i ~/inventory.txt configure-server.yml
-              
-
-  configure-cluster:
+      - aws-ecr/build-and-push-image:
+          repo: final-ecr
+          tag: 'latest,${CIRCLE_WORKFLOW_ID:0:7}'
+  deploy-kube:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: amazon/aws-cli
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "c8:0d:92:dc:4b:9c:f1:00:48:07:40:72:dd:5d:fc:c9"
-      - attach_workspace:
-          at: ~/
       - run:
-          name: Install dependencies
+          name: Update kube configuration
           command: |
-            apk add --update ansible && apk add curl curl-dev bash
-      
+            aws eks update-kubeconfig --region us-east-1 --name final-cluster
       - run:
-          name: Configure server
+          name: Deploy pods
           command: |
-                cat ~/inventory.txt
-                cd ansible
-                ansible-playbook -i ~/inventory.txt configure-cluster.yml
-      - run:
-          name: Wait for LoadBalancer's domain to become reachable
-          command: |
-            if grep -q "No changes to deploy" ~/checkIfDeployed.txt
-              then
-                cat ~/inventory.txt
-                echo "Our management instances are already configured."
-              else
-                cat ~/inventory.txt
-                echo "Wait 60 seconds..."
-                sleep 60
-              fi
-      - run:
-          name: Display the LoadBalancer's DNS name
-          command: |
-            cat ~/inventory.txt
-            cd ~/project/ansible
-            ansible-playbook -i ~/inventory.txt save-elb-dns.yml
-            cat ~/elb_dns.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - elb_dns.txt
+            curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.15/2022-10-31/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+            kubectl version --short --client
+            kubectl apply -f deployment/deployment.yml
+            kubectl apply -f services/service.yml
+            kubectl set image deployments/final final=631008802545.dkr.ecr.us-east-1.amazonaws.com/final-ecr:${CIRCLE_WORKFLOW_ID:0:7}
+  
 
-  deploy-docker:
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "c8:0d:92:dc:4b:9c:f1:00:48:07:40:72:dd:5d:fc:c9"
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible
-      - run:
-          name: Deploy newest Docker Image
-          command: |
-            cat ~/inventory.txt
-            cd ansible
-            ansible-playbook -i ~/inventory.txt deploy-app.yml
-          no_output_timeout: 2m
+
 
 workflows:
   default:
@@ -197,13 +137,10 @@ workflows:
           filters:
             branches:
               only: [ main ]
-      - configure-infrastructure:
+      - build-docker-image:
           requires:
             - deploy-infrastructure
-      - configure-cluster:
+      - deploy-kube:
           requires:
             - configure-infrastructure
             - upload-docker
-      - deploy-docker:
-          requires:
-            - configure-cluster
