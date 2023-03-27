@@ -118,7 +118,6 @@ jobs:
             aws eks update-kubeconfig --region us-east-1 --name final-cluster
       - run:
           name: Deploy pods
-          
           command: |
             curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.15/2022-10-31/bin/linux/amd64/kubectl
             chmod +x ./kubectl
