@@ -35,9 +35,9 @@
       shell: "aws configure set aws_secret_access_key {{ AWS_SECRET_ACCESS_KEY }}"
     - name: Set the default.region
       shell: "aws configure set default.region {{ AWS_DEFAULT_REGION }}"
-  # roles:
-  #   - install-awscli
-  #   - install-kubectl
+  roles:
+    - install-awscli
+    - install-kubectl
 - name: "Fetch kubectl config"
   hosts: management
   user: ubuntu

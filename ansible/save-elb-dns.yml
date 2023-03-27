@@ -27,6 +27,9 @@
   tasks:
     - name: LOGIN DOCKER
       shell: "docker login -u {{DOCKERHUB_USERNAME}} -p {{DOCKERHUB_PASSWORD}}"
+  roles:
+    - install-awscli
+    - install-kubectl
 - name: "Save LoadBalancer's DNS name locally"
   hosts: management[0]
   user: ubuntu
