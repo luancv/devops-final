@@ -130,10 +130,6 @@ jobs:
             aws sts get-caller-identity
             kubectl apply -f deployment/final-deployment.yaml
             kubectl apply -f services/final-service.yaml
-       - run:
-          name: run
-          command: |
-            kubectl run final --image=luancv/final --port=808     
 workflows:
   default:
     jobs:
