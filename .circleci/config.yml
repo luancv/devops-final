@@ -102,6 +102,7 @@ jobs:
     steps:
       - checkout
       - aws-ecr/build-and-push-image:
+          ORB_ENV_REGISTRY_ID: ORB_ENV_REGISTRY_ID
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-cli-version: latest
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
