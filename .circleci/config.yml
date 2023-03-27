@@ -97,35 +97,34 @@ jobs:
           paths:
             - inventory.txt
             - checkIfDeployed.txt
-  build-docker-image:
-    machine: true
-    steps:
-      - checkout
-      - aws-ecr/build-and-push-image:
-          aws-access-key-id: $AWS_ACCESS_KEY_ID
-          aws-cli-version: latest
-          aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
-          repo: final-ecr
-          tag: 'latest,${CIRCLE_WORKFLOW_ID:0:7}'
-  # deploy-kube:
-  #   docker:
-  #     - image: amazon/aws-cli
+  # build-docker-image:
+  #   machine: true
   #   steps:
   #     - checkout
-  #     - run:
-  #         name: Update kube configuration
-  #         command: |
-  #           aws eks update-kubeconfig --region us-east-1 --name final-cluster
-  #     - run:
-  #         name: Deploy pods
-  #         command: |
-  #           curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.15/2022-10-31/bin/linux/amd64/kubectl
-  #           chmod +x ./kubectl
-  #           mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-  #           kubectl version --short --client
-  #           kubectl apply -f deployment/final-deployment.yml
-  #           kubectl apply -f services/final-service.yml
-  #           kubectl set image deployments/final final=631008802545.dkr.ecr.us-east-1.amazonaws.com/final-ecr:${CIRCLE_WORKFLOW_ID:0:7}
+  #     - aws-ecr/build-and-push-image:
+  #         aws-cli-version: latest
+ 
+  #         repo: final-ecr
+  #         tag: 'latest,${CIRCLE_WORKFLOW_ID:0:7}'
+  deploy-kube:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Update kube configuration
+          command: |
+            aws eks update-kubeconfig --region us-east-1 --name final-cluster
+      - run:
+          name: Deploy pods
+          command: |
+            curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.15/2022-10-31/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+            kubectl version --short --client
+            kubectl apply -f deployment/final-deployment.yml
+            kubectl apply -f services/final-service.yml
+            kubectl set image deployments/final final=631008802545.dkr.ecr.us-east-1.amazonaws.com/final-ecr:${CIRCLE_WORKFLOW_ID:0:7}
   
 
 
