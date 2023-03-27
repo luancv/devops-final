@@ -115,7 +115,7 @@ jobs:
       - run:
           name: Update kube configuration
           command: |
-            aws eks update-kubeconfig --region us-east-1 --name final-cluster
+            aws eks update-kubeconfig --region us-east-1 --name FinalCluster
       - run:
           name: Deploy pods
           command: |
