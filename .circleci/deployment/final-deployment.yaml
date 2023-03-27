@@ -1,11 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: final
   labels:
-    app: final
+    service: final
+  name: final
 spec:
-  replicas: 4
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: final
@@ -15,7 +20,15 @@ spec:
         app: final
     spec:
       containers:
-        - name: final
-          image: luancv/final
-          ports:
-            - containerPort: 8080
+      - image: docker.io/luancv/final:latest
+        name: final
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
