@@ -126,9 +126,6 @@ jobs:
             kubectl apply -f services/final-service.yml
             kubectl set image deployments/final final=631008802545.dkr.ecr.us-east-1.amazonaws.com/final-ecr:${CIRCLE_WORKFLOW_ID:0:7}
   
-
-
-
 workflows:
   default:
     jobs:
