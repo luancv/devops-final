@@ -85,7 +85,7 @@ jobs:
             cat ~/checkIfDeployed.txt
       - run:
           name: Extract the IPs of the management instances for Ansible
-          command: |
+          commandprovider: |
             echo [management] > ~/inventory.txt
             aws ec2 describe-instances \
               --region "${AWS_DEFAULT_REGION}" \
@@ -129,6 +129,8 @@ jobs:
             cat $HOME/.aws/credentials
             aws sts get-caller-identity
             kubectl apply -f deployment/final-deployment.yaml
+            kubectl apply -f services/final-service.yaml
+            # kubectl set image deployments/final final=luancv/final
   
 workflows:
   default:
