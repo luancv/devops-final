@@ -20,7 +20,7 @@
   args:
     chdir: $HOME
 - name: "install"
-  shell: "sudo apt install docker-ce"
+  shell: "sudo apt install -y docker-ce"
   args:
     chdir: $HOME
 
