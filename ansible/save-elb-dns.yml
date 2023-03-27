@@ -15,7 +15,9 @@
       shell: "aws configure set aws_secret_access_key {{ AWS_SECRET_ACCESS_KEY }}"
     - name: Set the default.region
       shell: "aws configure set default.region {{ AWS_DEFAULT_REGION }}"
-
+  roles:
+    - install-awscli
+    - install-kubectl
 - name: "LOGIN DOCKER"
   hosts: management
   user: ubuntu
@@ -27,9 +29,7 @@
   tasks:
     - name: LOGIN DOCKER
       shell: "docker login -u {{DOCKERHUB_USERNAME}} -p {{DOCKERHUB_PASSWORD}}"
-  roles:
-    - install-awscli
-    - install-kubectl
+  
 - name: "Save LoadBalancer's DNS name locally"
   hosts: management[0]
   user: ubuntu
