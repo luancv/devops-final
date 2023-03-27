@@ -3,10 +3,6 @@
   shell: "sudo apt update"
   args:
     chdir: $HOME
-- name: "use packages over HTTPS"
-  shell: "sudo apt install apt-transport-https ca-certificates curl software-properties-common"
-  args:
-    chdir: $HOME
 - name: "add the GPG key "
   shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
   args:
