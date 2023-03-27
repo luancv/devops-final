@@ -1,13 +1,5 @@
 FROM python:3.7.3-stretch
 
-RUN apt-get clean \
-    && apt-get -y update
-
-RUN apt-get -y install \
-    nginx \
-    python3-dev \
-    build-essential
-    
 WORKDIR /app
 
 COPY . app.py /app/
