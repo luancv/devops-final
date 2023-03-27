@@ -128,7 +128,7 @@ jobs:
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             kubectl apply -f deployment/final-deployment.yml
             kubectl apply -f services/final-service.yml
-            kubectl set image deployments/final final=631008802545.dkr.ecr.us-east-1.amazonaws.com/final-ecr:${CIRCLE_WORKFLOW_ID:0:7}
+            kubectl set image deployments/final final=luancv/final
   
 workflows:
   default:
