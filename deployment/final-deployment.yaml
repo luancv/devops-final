@@ -1,34 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: final
   labels:
-    service: server-app
-  name: server-app
+    app: final
 spec:
-  replicas: 2
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+  replicas: 4
   selector:
     matchLabels:
-      app: server-app
+      app: final
   template:
     metadata:
       labels:
-        app: server-app
+        app: final
     spec:
       containers:
-      - image: luancv/final:lates
-        name: server-app
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 8080
+        - name: final
+          image: luancv/final:lates
+          ports:
+            - containerPort: 80
