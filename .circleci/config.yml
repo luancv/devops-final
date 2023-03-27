@@ -141,6 +141,7 @@ jobs:
             kubectl get pods
             # Step 4:
             # Forward the container port to a host
+            sleep 120
             kubectl port-forward final 8080:80
             # kubectl set image deployments/final final=luancv/final
   
