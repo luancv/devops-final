@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Set up application
+
+
+Resources:
+  EKSCluster:
+    Type: 'AWS::EKS::Cluster'
+    Properties:
+      Name: FinalCluster
+      RoleArn: arn:aws:iam::313868411028:role/eks-role
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - sg-0737a8a36b3865324
+        SubnetIds:
+          - subnet-0e3f3adb7a3925383
+          - subnet-0e65258d4ca04bc9e 
+          - subnet-076ba06ddbd6b07b0
+
+  EKSNodeGroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: FinalNode
+      InstanceTypes: 
+        - t2.micro
+      NodeRole: arn:aws:iam::313868411028:role/Role-node
+      DiskSize: 8
+      RemoteAccess: 
+        Ec2SshKey: key-ec2
+        SourceSecurityGroups: 
+          - sg-0737a8a36b3865324
+      ScalingConfig:
+        MinSize: 2
+        DesiredSize: 2
+        MaxSize: 2
+      Subnets:
+        - subnet-0e3f3adb7a3925383
+        - subnet-0e65258d4ca04bc9e 
+        - subnet-076ba06ddbd6b07b0

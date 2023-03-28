@@ -32,13 +32,6 @@ jobs:
           command: |
             . venv/bin/activate
             make lint
-      - run:
-          name: run lint
-          command: |
-            ls -la
-            cd /app
-            ls 
-            pws
       - save_cache:
           paths:
             - ./venv
@@ -70,49 +63,6 @@ jobs:
             docker pull luancv/final
             echo "====push ==="
 
-  deploy-infrastructure:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: yum install -y tar gzip
-      - run:
-          name: Ensure management instances exists
-          command: |
-            aws cloudformation deploy \
-              --template-file cloudformation/management.yml \
-              --tags project=${ENVIRONMENT_NAME}-project \
-              --stack-name "${ENVIRONMENT_NAME}-eks-management" \
-              --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides file://cloudformation/management-parameters.json \
-              --output text >> ~/checkIfDeployed.txt
-            cat ~/checkIfDeployed.txt
-      - run:
-          name: Extract the IPs of the management instances for Ansible
-          command: |
-            echo [management] > ~/inventory.txt
-            aws ec2 describe-instances \
-              --region "${AWS_DEFAULT_REGION}" \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Name,Values=${ENVIRONMENT_NAME}-management*" \
-              --output text >> ~/inventory.txt
-            cat ~/inventory.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - inventory.txt
-            - checkIfDeployed.txt
-  # build-docker-image:
-  #   machine: true
-  #   steps:
-  #     - checkout
-  #     - aws-ecr/build-and-push-image:
-  #         aws-cli-version: latest
- 
-  #         repo: final-ecr
-  #         tag: 'latest,${CIRCLE_WORKFLOW_ID:0:7}'
   deploy-kube:
     docker:
       - image: amazon/aws-cli
@@ -146,13 +96,6 @@ workflows:
           filters:
             branches:
               only: [ main ]
-      - deploy-infrastructure:
-          filters:
-            branches:
-              only: [ main ]
-      # - build-docker-image:
-      #     requires:
-      #       - deploy-infrastructure
       - deploy-kube:
           requires: 
           - upload-docker
